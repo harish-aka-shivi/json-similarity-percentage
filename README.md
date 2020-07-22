@@ -1,6 +1,9 @@
 ## Description
 Calculate the similarity percentage between two json files
 
+## Deployed link
+https://json-similarity-percentage.vercel.app/
+
 ## Architecture
 ### Algorithm
 This algorithm use the following approach
