@@ -103,4 +103,30 @@ describe('calculate the similarity percentage of json', () => {
     }`;
     expect(calculateSimilarityStore(json1, json2)).toBe(0.25);
   });
+
+  test('null values should return equal', () => {
+    const json1 = 'null';
+    const json2 = 'null';
+    expect(calculateSimilarityStore(json1, json2)).toBe(1);
+  });
+
+  test('should handle null as values', () => {
+    const json1 = `{
+      "a" : null
+    }`;
+    const json2 = `{
+      "a": null
+    }`;
+    expect(calculateSimilarityStore(json1, json2)).toBe(1);
+  });
+
+  test('should return unequal when empty object and array are equated', () => {
+    const json1 = `{
+      "a" : []
+    }`;
+    const json2 = `{
+      "a": {}
+    }`;
+    expect(calculateSimilarityStore(json1, json2)).toBe(0);
+  });
 });
