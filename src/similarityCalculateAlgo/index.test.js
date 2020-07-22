@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import calculateSimilarityStore from './index';
-import { INVALID_JSON } from './errorMessges';
+import { INVALID_JSON } from './errorMessages';
 
 describe('calculate the similarity percentage of json', () => {
   test('should not run for invalid json', () => {
@@ -56,5 +56,51 @@ describe('calculate the similarity percentage of json', () => {
       "d": "4"
     }`;
     expect(calculateSimilarityStore(json1, json2)).toBe(0.875);
+  });
+
+  test('should return  0 for non matching objects', () => {
+    const json1 = `{
+      "a": "1",
+      "b": "2",
+      "c": {
+        "a": 1,
+        "b": 1
+      },
+      "d": "4"
+    }`;
+    const json2 = `{
+      "a": {},
+      "b": [],
+      "c": {
+        "a": "1",
+        "b": "1"
+      },
+      "d": 4
+    }`;
+    expect(calculateSimilarityStore(json1, json2)).toBe(0);
+  });
+
+  test('verify that its working with arrays, should return 0.25', () => {
+    const json1 = `{
+      "c": {
+        "a": 1,
+        "b": 1
+      },
+      "d": [
+        "4",
+        4
+      ]
+    }`;
+    const json2 = `{
+      "c": [
+        "1",
+        "1"
+      ],
+      "d": [
+        4,
+        4
+      ]
+    }`;
+    expect(calculateSimilarityStore(json1, json2)).toBe(0.25);
   });
 });
